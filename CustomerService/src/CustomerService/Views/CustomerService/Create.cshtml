@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CustomerService.Models.Customer
+
+<h2>Add a new customer</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Name)
+    @Html.EditorFor(model => model.Name)
+    @Html.LabelFor(model => model.Zip)
+    @Html.EditorFor(model => model.Zip)
+
+    <input type="submit" value="Create" />
+}
+@Html.ActionLink("Back to List", "Index")

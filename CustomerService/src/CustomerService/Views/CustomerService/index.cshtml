@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Security.Claims
+
+<h2>customers for @User.Identity.Name</h2>
+<hr />
+@Html.ActionLink("Create new", "Create")
+@model IEnumerable<CustomerService.Models.Customer>
+
+<h2>Current Customers</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var listCustomer in Model)
+        {
+            <li>Name: @Html.DisplayFor(modelCustomer => listCustomer.Name)  || Zip: @Html.DisplayFor(modelCustomer => listCustomer.Zip)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No current customers</p>
+}
+
+@Html.ActionLink("Create new", "Create")
