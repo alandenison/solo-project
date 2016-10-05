@@ -40,6 +40,10 @@ namespace CustomerService.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+        public IActionResult cityState()
+        {
+            return Content("hi");
+        }
+
     }
 }
