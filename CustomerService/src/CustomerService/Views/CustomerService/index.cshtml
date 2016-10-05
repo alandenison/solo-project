@@ -18,7 +18,7 @@
     <ul>
         @foreach (var listCustomer in Model)
         {
-            <li>Name: @Html.DisplayFor(modelCustomer => listCustomer.Name)  || <span class="city-state">Address: </span> Zip: @Html.DisplayFor(modelCustomer => listCustomer.Zip)<button id="@listCustomer.Zip" class="show-city-state">Show city and state</button></li>
+            <li>Name: @Html.DisplayFor(modelCustomer => listCustomer.Name) <span class="@listCustomer.Zip">Address: </span> Zip: @Html.DisplayFor(modelCustomer => listCustomer.Zip)<button id="@listCustomer.Zip" class="show-city-state">Show city and state</button></li>
         }
     </ul>
     <button id="show-city-state">Show city and state</button>
@@ -37,12 +37,22 @@ else
         $('.show-city-state').click(function () {
             var thisCustomer;
             thisCustomer = $(this).attr("id");
-            alert(thisCustomer);
             $.ajax({
                 type: 'GET',
+                data: { thisCustomer },
                 url: '@Url.Action("cityState")',
                 success: function (result) {
-                    $('.city-state').text(result);
+                    var client = new XMLHttpRequest();
+                    client.open("GET", result, true);
+                    client.onreadystatechange = function () {
+                        if (client.readyState == 4) {
+                            var substr = jQuery.parseJSON(client.responseText);
+                            (substr.places[0]["place name"]);
+                            $('.' + thisCustomer).text(substr.places[0]["place name"] + " " + substr.places[0]["state"]);
+                        };
+                    };
+
+                    client.send();
                 }
             });
         });

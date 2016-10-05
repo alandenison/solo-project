@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using CustomerService.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CustomerService.Controllers
 {
@@ -40,9 +42,11 @@ namespace CustomerService.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public IActionResult cityState()
+        public IActionResult cityState(long thisCustomer)
         {
-            return Content("hi");
+            long zip = thisCustomer;
+            string request = ("http://api.zippopotam.us/us/" + thisCustomer);
+            return Content(request);
         }
 
     }
